@@ -48,12 +48,14 @@ document
 
 // Itens de coleta.
 
+
+
 const itemsToCollect = document.querySelectorAll(".items-grid li");
 
 for(let item of itemsToCollect){
     item.addEventListener("click", handleSelectedItem);
 }
-
+const collectedItems = document.querySelector("input[name=items]");
 let selectedItems = [];
 
 function handleSelectedItem(event){
@@ -61,7 +63,23 @@ function handleSelectedItem(event){
     itemLi.classList.toggle("selected");
     const {id} = itemLi.dataset;
 
-    const alreadySelected = selectedItems.findIndex(function (item){
-        return item 
-    });
+    const alreadySelected = selectedItems.findIndex(item => item == itemId);
+    /*
+        const alreadySelected = selectedItems.findIndex((item) => {
+            const itemFound = item == itemId
+            return itemFound;
+        });
+    */
+
+    if(alreadySelected >= 0){
+        const filteredItems = selectedItems.filter(item => {
+            const itemIsDifferent = item != itemId;
+            return itemIsDifferent;
+        });
+        selectedItems = filteredItems;
+    } else {
+        selectedItems.push(itemId);
+    }
+    collectedItems.value = selectedItems;
+
 }
