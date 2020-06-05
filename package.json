@@ -1,0 +1,17 @@
+{
+  "name": "ecoleta",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:ajjunior33/ecoleta.git",
+  "author": "André Junior <andrejr33@suporteava.com.br>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
