@@ -1,0 +1,52 @@
+{% extends 'layout.html' %} {% set pageId = "page-home" %} {% block styles %}
+<link rel="stylesheet" href="./styles/page-home.css" />{% endblock styles %} {%
+block content %}
+<div class="container">
+  {% for item in DataPortodeSantana %}
+  <div class="accordion" id="accordionExample{{item.id}}">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne{{item.id}}">
+        <button
+          class="accordion-button"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseOne{{item.id}}"
+          aria-expanded="true"
+          aria-controls="collapseOne{{item.id}}"
+        >
+          {{ item.title }}
+        </button>
+      </h2>
+      <div
+        id="collapseOne{{item.id}}"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingOne{{item.id}}"
+        data-bs-parent="#accordionExample{{item.id}}"
+      >
+        <div class="accordion-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Data</th>
+                <th scope="col">Ministro</th>
+                <th scope="col">Back Vocal</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for escala in item.escalas %}
+              <tr>
+                <td>{{escala.date}}</td>
+                <td>{{escala.minister}}</td>
+                <td>{{escala.backVocal}}</td>
+              </tr>
+
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock content %} {% block scripts %} {% endblock scripts %}

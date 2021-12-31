@@ -1,10 +1,11 @@
 const express = require('express');
+const res = require('express/lib/response');
 
 const server = express();
 
 //pega o banco de dados;
 
-const db = require("./database/db");
+// const db = require("./database/db");
 
 server.use(express.static('public'));
 server.use(express.urlencoded({extended:true}));
@@ -19,63 +20,15 @@ nunjucks.configure("src/views", {
 server.get("/", (req,res) => {
     return res.render(`index.html`);
 });
-server.get("/create-point", (req,res) => {
-    return res.render(`create-point.html`);
+
+server.get('/ps', (request,response) => {
+    const DataPortodeSantana = require('./database/portodesantana.json');
+    return response.render(`portodesantana.html`, {DataPortodeSantana});
 });
 
-server.post("/create-point", (req,res) => {
-    const query = `
-    INSERT INTO places (
-        image, 
-        name,
-        address,
-        address2,
-        state,
-        city,
-        items
-        ) VALUES (?,?,?,?,?,?,?);`;
-
-    const values = [
-        req.body.image,
-        req.body.name,
-        req.body.address,
-        req.body.address2,
-        req.body.state,
-        req.body.city,
-        req.body.items
-    ];
-    function affterInsertData(err){
-        if(err){
-            return console.log(err);
-        }
-
-        return res.render(`create-point.html`,{saved: true});
-
-    }
-    db.run(query, values, affterInsertData);
-
-});
-
-server.get("/search-results", (req,res) => {
-
-    const search = req.query.search;
-
-    if(search == ""){
-        return res.render(`search-results.html`, {total: 0});
-    }
-
-
-
-    db.all(`SELECT * FROM places WHERE city LIKE "%${search}%"`, function(err, rows){
-        if(err)
-            return console.log(err);
-
-        const total = rows.length;
-
-        return res.render(`search-results.html`, {places: rows, total});
-    });
-
-});
-
+server.get('/grauna', (request,response) => {
+    const DataGrauna = require('./database/grauna.json');
+    return response.render('grauna.html', {DataGrauna})
+})
 
 server.listen(3000);
